@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<!-- Meta, title, CSS, favicons, etc. -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="../../favicon.ico">
+
+<title>bs3tools - bootstrap3 tools</title>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="./assets/js/ie10-viewport-bug-workaround.js"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('[data-toggle="offcanvas"]').click(function() {
+			$('.row-offcanvas').toggleClass('active')
+		});
+	});
+</script>
+
+<link href="assets/google-code-prettify/prettify.css" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="./assets/SyntaxHighlighter-3.0.83/styles/shCore.css"/>
+<link type="text/css" rel="Stylesheet" href="./assets/SyntaxHighlighter-3.0.83/styles/shThemeDefault.css" />
+
+<link rel="stylesheet" href="./css/base.css">
+<link rel="stylesheet" href="./css/bs3table-sort.css">
+<script src="./assets/bs3tools/bs3tools.js"></script>
+</head>
+<body>
+
+	<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">bs3tools</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="./index.html">Home</a></li>
+					<li  class="active"><a href="./bs3table.html">bs3table</a></li>
+					<li><a href="./bs3paging.html">bs3paging</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"
+						style="vertical-align: bottom; text-decoration: none;"><img
+							src="./img/blacktocat.png" style="height: 20px;">
+							GitHub</a></li>
+				</ul>
+			</div>
+			<!-- /.nav-collapse -->
+		</div>
+		<!-- /.container -->
+	</div>
+	<!-- /.navbar -->
+
+
+	<!-- 페이지별 내용 시작------------------------------------- -->
+	<script src="./bs3table.js"></script>
+	
+	<!-- /.navbar -->
+	<div class="container">
+
+		<div class="row row-offcanvas row-offcanvas-right">
+
+			<div class="col-xs-12 col-sm-9">
+				
+				<p class="pull-right visible-xs">
+					<button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+				</p>
+
+				<section id="overview">
+					<div style="height: 30px;"></div>
+					<div class="page-header">
+						<h1>bs3table</h1>
+					</div>
+					<p>Bootstrap3 table jQuery Plugin.</p>
+					<h3>Example Data</h3>
+					<p>The following data is used in the tutorial.</p>
+<pre class="brush : js;">
+// Sample Data
+var people = [ 
+               { 'id' : 1, 'name' : '이철수', 'age' : 21 }, 
+               { 'id' : 2, 'name' : '김영희', 'age' : 33 }, 
+               { 'id' : 3, 'name' : '장동민', 'age' : 18 }, 
+               { 'id' : 4, 'name' : '홍길동', 'age' : 40 }, 
+               { 'id' : 5, 'name' : '이순신', 'age' : 17 }, 
+               { 'id' : 6, 'name' : '조악필', 'age' : 20 } ];
+</pre>
+
+				</section>
+				
+				<section id="tutorial1">
+					<div style="height: 30px;"></div>
+					<div class="page-header">
+						<h1>Tutorial 1</h1>
+					</div>
+					<p>basic table.</p>
+    				<h3>Create Grid &amp; Data Bind</h3>
+<pre class="brush : js;">
+// tutorial_1_table
+$('#tutorial1_table').bs3table({
+	columns : [ {
+		header : 'ID',
+		headerAlign : 'center',
+		dataIndex : 'id',
+		dataAlign : 'right',
+		width : 40
+	}, {
+		header : 'Name',
+		dataIndex : 'name',
+		headerAlign : 'center',
+		dataAlign : 'center',
+	}, {
+		header : 'Age',
+		dataIndex : 'age',
+		headerAlign : 'center',
+		dataAlign : 'center'
+	}, {
+		header : 'Adult',
+		headerAlign : 'center',
+		dataAlign : 'center',
+		renderer : function(rowData, rowIndex, td, tr) {
+			if (rowData.age >= 20) {
+				tr.addClass("success");
+				return "YES";
+			} else {
+				tr.addClass("danger");
+				return "NO";
+			}
+		}
+	} ],
+	listener : {
+		rowClick : function(rowIndex, rowData, tr) {
+			alert('rowIndex: ' + rowIndex + ', name: ' + rowData.name);
+		}
+	},
+	tableCss : [ "table", "table-bordered"],
+	selectbox : {
+		useSelect : false,
+		multiSelect : false,
+		selectByRowClick : false,
+		selectedRowCss : "active"
+	}
+});
+
+// Data Bind
+$('#tutorial1_table').bs3table('dataBind', people);
+
+$('#btn_tutorial1_dataBind').click(function() {
+	$('#tutorial1_table').bs3table('dataBind', people);
+});
+$('#btn_tutorial1_dataBind_add').click(function() {
+	$('#tutorial1_table').bs3table('dataBind', people, true);
+});
+$('#btn_tutorial1_clear').click(function() {
+	$('#tutorial1_table').bs3table('clear');
+});
+</pre>
+					<h3>Tutorial 1 Example</h3>
+					<div id="tutorial1_table" style="width: 400px;"></div>
+				    <div>
+				        <h3>check point</h3>
+				        <ul><li>align: text-align of table(header, data)</li></ul>
+				        <ul><li>rowClick: check row click Event</li></ul>
+				        <ul><li>renderer: show data by user function. check tr rendering.</li></ul>
+				        <ul><li>databind: data clear and bind <button id="btn_tutorial1_dataBind" class="btn btn-default">test</button></li></ul>
+				        <ul><li>dataBind(add): add data to table <button id="btn_tutorial1_dataBind_add" class="btn btn-default">test</button></li></ul>
+				        <ul><li>clear: clear table body <button id="btn_tutorial1_clear" class="btn btn-default">test</button></li></ul>
+				    </div>					
+				</section>
+
+				<section id="tutorial2">
+					<div style="height: 30px;"></div>
+					<div class="page-header">
+						<h1>Tutorial 2</h1>
+					</div>
+					<p>use single select table.</p>
+    				<h3>Create Grid &amp; Data Bind</h3>
+<pre class="brush : js;">
+// tutorial2_table
+$('#tutorial2_table').bs3table({
+	columns : [ {
+		header : 'ID',
+		headerAlign : 'center',
+		sort: true,
+		sortName:'id',
+		dataIndex : 'id',
+		dataAlign : 'right',
+		width : 60
+	}, {
+		header : 'Name',
+		dataIndex : 'name',
+		headerAlign : 'center',
+		dataAlign : 'center'
+	}, {
+		header : 'Age',
+		dataIndex : 'age',
+		headerAlign : 'center',
+		dataAlign : 'center'
+	}, {
+		header : 'Adult',
+		headerAlign : 'center',
+		dataAlign : 'center',
+		sort : true,
+		sortName : 'age',
+		renderer : function(rowData, rowIndex, td, tr) {
+			if (rowData.age >= 20) {
+				td.addClass("success");
+				return "YES";
+			} else {
+				td.addClass("danger");
+				return "NO";
+			}
+		}
+	} ],
+	listener : {
+		sortChange : function(sortName, sortASC) {
+			var sortFn = function(a, b){return a[sortName] - b[sortName];}; 
+			if (sortASC == false) {
+				sortFn = function(a, b){return b[sortName] - a[sortName];};
+			}
+			
+			people.sort(sortFn);
+			$('#tutorial2_table').bs3table('dataBind', people);
+			
+		}
+	},
+	tableCss : [ "table", "table-bordered", "table-hover" ],
+	selectbox : {
+		useSelect : true,
+		multiSelect : false,
+		selectByRowClick : true,
+		selectedRowCss : "active"
+	}
+});
+
+// Data Bind
+$('#tutorial2_table').bs3table('setSortOption', {
+	"sortName" : "id",
+	"sortASC" : true
+});
+$('#tutorial2_table').bs3table('dataBind', people);
+
+$('#btn_tutorial2_getSortOption').click(function() {
+	sortOption = $('#tutorial2_table').bs3table('getSortOption');
+	alert("sortName: " + sortOption[0].sortName + " / "  + "sortASC: " + sortOption[0].sortASC);
+});
+
+$('#btn_tutorial2_getSelectedData').click(function() {
+	selectedData = $('#tutorial2_table').bs3table('getSelectedData');
+	
+	if (selectedData.length == 0) {
+		alert('not selected');
+	} else {
+		alert(selectedData[0].name);			
+	}
+});
+</pre>
+					<h3>Tutorial 2 Example</h3>
+					<div id="tutorial2_table" style="width: 400px;"></div>
+				    <div>
+				        <h3>check point</h3>
+				        <ul><li>setSortOption: set sortOption to table. not fired sortChange event</li></ul>
+				        <ul><li>check sortChange: click sortable header.</li></ul>
+				        <ul><li>getSortOption: get current sortOptions <button id="btn_tutorial2_getSortOption" class="btn btn-default">test</button></li></ul>
+				        <ul><li>renderer: check td rendering</li></ul>
+				        <ul><li>single select: only one row can be seleted.</li></ul>
+				        <ul><li>getSelectedData: only one row can be seleted. <button id="btn_tutorial2_getSelectedData" class="btn btn-default">test</button></li></ul>
+				    </div>	
+				</section>
+				
+				<section id="tutorial3">
+					<div style="height: 30px;"></div>
+					<div class="page-header">
+						<h1>Tutorial 3</h1>
+					</div>
+					<p>use multi select table.</p>
+    				<h3>Create Grid &amp; Data Bind</h3>
+<pre class="brush : js;">
+// tutorial3_table
+$('#tutorial3_table').bs3table({
+	columns : [ {
+		header : 'ID',
+		headerAlign : 'center',
+		sort: true,
+		sortName:'id',
+		dataIndex : 'id',
+		dataAlign : 'right',
+		width : 60
+	}, {
+		header : 'Name',
+		dataIndex : 'name',
+		headerAlign : 'center',
+		dataAlign : 'center'
+	}, {
+		header : 'Age',
+		dataIndex : 'age',
+		headerAlign : 'center',
+		dataAlign : 'center',
+		sort : true,
+		sortName : 'age'
+	}, {
+		header : 'Adult',
+		headerAlign : 'center',
+		dataAlign : 'center',
+		renderer : function(rowData, rowIndex, td, tr) {
+			if (rowData.age >= 20) {
+				td.addClass("success");
+				return "YES";
+			} else {
+				td.addClass("danger");
+				return "NO";
+			}
+		}
+	} ],
+	listener : {
+		sortChange : function(sortName, sortASC) {
+			var sortFn = function(a, b){return a[sortName] - b[sortName];}; 
+			if (sortASC == false) {
+				sortFn = function(a, b){return b[sortName] - a[sortName];};
+			}
+			
+			people.sort(sortFn);
+			$('#tutorial3_table').bs3table('dataBind', people);
+			
+		}
+	},
+	tableCss : [ "table", "table-bordered", "table-hover" ],
+	selectbox : {
+		useSelect : true,
+		multiSelect : true,
+		selectByRowClick : true,
+		selectedRowCss : "active"
+	}
+});
+
+// Data Bind
+$('#tutorial3_table').bs3table('dataBind', people);
+
+$('#btn_tutorial3_getSelectedData').click(function() {
+	selectedData = $('#tutorial3_table').bs3table('getSelectedData');
+	
+	if (selectedData.length == 0) {
+		alert('not selected');
+	} else {
+		alert(selectedData.length);
+	}
+});
+</pre>
+					<h3>Tutorial 3 Example</h3>
+					<div id="tutorial3_table" style="width: 400px;"></div>
+				    <div>
+				        <h3>check point</h3>
+				        <ul><li>getSelectedData: only one row can be seleted. <button id="btn_tutorial3_getSelectedData" class="btn btn-default">test</button></li></ul>
+				        <ul><li>setSortOption: set sortOption to table. not fired sortChange event</li></ul>
+				        <ul><li>see checkbox of column header.</li></ul>
+				    </div>	
+				</section>
+				
+				<section id="usage">
+					<div style="height: 30px;"></div>
+					<div class="page-header">
+						<h1>Usage</h1>
+					</div>
+					<div style="height: 30px;"></div>
+					<h3>Install</h3>
+<pre class="brush : html">
+<!-- 정렬 기능 사용시 배경 화살표 표현을 위한 css파일 및 이미지 파일이 필요함. -->
+		
+&lt;link type="text/css" rel="stylesheet" href="bs3table-sort.css"/&gt;
+&lt;script src="bs3tools.js"&gt;&lt;/script&gt;
+</pre>
+
+					<div style="height: 30px;"></div>
+					<h3>Create Grid</h3>
+<pre class="brush : js;">$('target').bs3table(options)</pre>
+
+					<div style="height: 30px;"></div>
+					<h4>default options</h4>
+<pre class="brush : js;">
+{
+	var defaultSetting = {
+		columns : [{
+			header : 'ID',
+			headerAlign : 'center',
+			headerCss : ['cssClassName'] 
+			sort: true,
+			sortName:'id',
+			dataIndex : 'id',
+			dataAlign : 'right',
+			width : 60
+		},{
+			header : 'Adult',
+			headerAlign : 'center',
+			dataAlign : 'center',
+			sort : true,
+			sortName : 'age',
+			renderer : function(rowData, rowIndex, td, tr) {
+				if (rowData.age >= 20) {
+					td.addClass("success");
+					return "YES";
+				} else {
+					td.addClass("danger");
+					return "NO";
+				}
+			}
+		}],
+		tableCss : [ "table" ],
+		listener : {
+			rowClick : function(rowIndex, rowData, tr) {
+			},
+			sortChange : function(sortName, sortASC) {
+			}
+		},
+		selectbox : {
+			useSelect : false,
+			multiSelect : false,
+			selectByRowClick : false,
+			selectedRowCss : "active"
+		}
+	};
+}
+</pre>
+   <h3>options</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>columns</td>
+                <td>column Array</td>
+                <td>각 컬럼들을 정의한다.</td>
+            </tr>
+            <tr> <td>tableCss</td> <td>string array</td> <td>table에 적용될 css Class 들을 정의.</td> </tr>
+            <tr> <td>selectbox</td> <td>string</td> <td>selectbox 사용 시 옵션들.</td> </tr>
+            <tr>
+                <td>listener</td>
+                <td>json object </td>
+                <td>event listener 클래스</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h3>options.columns</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr> <th>Name</th> <th>Type</th> <th>Description</th> </tr>
+        </thead>
+        <tbody>
+            <tr> <td>header</td> <td>string</td> <td>헤더명.</td> </tr>
+            <tr> <td>headerAlign</td> <td>string</td> <td>헤더 정렬 ['left', 'center', 'right'].</td> </tr>
+            <tr> <td>sort</td> <td>boolean</td> <td>현재 컬럼에서 정렬 사용 여부.</td> </tr>
+            <tr> <td>sortName</td> <td>string</td> <td>정렬 사용시 사용할 프로퍼티 이름(생략시 dataIndex 사용)</td> </tr>
+            <tr> <td>dataIndex</td> <td>string</td> <td>바인딩 된 데이터에서 현재 컬럼에 사용될 프로퍼티 이름.</td> </tr>
+            <tr> <td>dataAlign</td> <td>string</td> <td>데이터 정렬 ['left', 'center', 'right'].</td> </tr>
+            <tr> <td>width</td> <td>mixed</td> <td>컬럼 넓이</td> </tr>
+            <tr> <td>renderer</td> <td>function(record, rowIndex)</td> <td>해당 셀에 append 시킬 문자 및 객체를 반환하도록 작성한다.</td> </tr>
+        </tbody>
+    </table>
+    
+    <h3>options.listener</h3>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th> <th>Type</th> <th>Description</th> </tr>
+        </thead>
+        <tbody>
+            <tr> <td>rowClick</td> <td>function(rowIndex, rowData, tr)</td> <td>로우 클릭 시 동작함수</td> </tr>
+            <tr> <td>sortChange</td> <td>function(sortName, sortASC)</td> <td>header의 정렬을 클릭 시 발생됨.</td> </tr>
+        </tbody>
+    </table>
+    
+   <h3> Methods </h3>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Return</th>
+                <th>Method</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>void</td>
+                <td>$(target).bs3table('dataBind', data, addRow)</td>
+                <td>json object array data를 그리드에 바인딩. addRow = 추가할지 지우고 새로 바인딩할지 여부</td>
+            </tr>
+            <tr>
+                <td>void</td>
+                <td>$(target).bs3table('clear')</td>
+                <td>현재 그리드의 데이터를 모두 초기화.</td>
+            </tr>
+            <tr>
+                <td>record array</td>
+                <td>$(target).bs3table('getSelectedData')</td>
+                <td>현재 선택된 로우들의 데이터를 반환.</td>
+            </tr>
+            <tr>
+                <td>record array</td>
+                <td>$(target).bs3table('setSortOption', { sortName: "id", sortASC : true )</td>
+                <td>정렬 이벤트를 발생시키지 않고 초기세팅할때 등에서 사용됨. 화면 상태를 설정한대로 변경하고 현재 솔팅정보를 플러그인에 저장</td>
+            </tr>
+            <tr>
+                <td>record array</td>
+                <td>$(target).bs3table('ㅎetSortOption'</td>
+                <td>현재 테이블에 반영된 솔팅정보(헤더 이벤트 클릭 시 정보를 얻어 솔팅하는 등에서 사용).</td>
+            </tr>
+        </tbody>
+    </table>
+
+				</section>
+				
+
+
+			</div>
+			<!--/span-->
+
+			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+				<div data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+					<div class="list-group" style="width: 250px;">
+						<a class="list-group-item" href="#overview" data-toggle="offcanvas">Overview</a>
+						<a class="list-group-item" href="#tutorial1" data-toggle="offcanvas">Tutorial 1 - basic table</a> 
+						<a class="list-group-item" href="#tutorial2" data-toggle="offcanvas">Tutorial 2 - single select</a> 
+						<a class="list-group-item" href="#tutorial3" data-toggle="offcanvas">Tutorial 3 - multi select</a> 
+						<a class="list-group-item" href="#usage" data-toggle="offcanvas">Usage</a>
+					</div>
+				</div>
+			</div>
+			<!--/span-->
+		</div>
+		<!--/row-->
+
+		<hr>
+
+		<footer>
+			<p>&copy; Company 2014</p>
+		</footer>
+
+	</div>
+	<!--/.container-->
+
+	<script type="text/javascript" src="./assets/SyntaxHighlighter-3.0.83/scripts/XRegExp.js"></script> 
+	<!-- XRegExp is bundled with the final shCore.js during build -->
+    <script type="text/javascript" src="./assets/SyntaxHighlighter-3.0.83/scripts/shCore.js"></script>
+    <script type="text/javascript" src="./assets/SyntaxHighlighter-3.0.83/scripts/shAutoloader.js"></script>
+
+
+	<script type="text/javascript">
+		SyntaxHighlighter.autoloader(
+			'applescript			./assets/SyntaxHighlighter-3.0.83/scripts/shBrushAppleScript.js',
+			'actionscript3 as3		./assets/SyntaxHighlighter-3.0.83/scripts/shBrushAS3.js',
+			'bash shell				./assets/SyntaxHighlighter-3.0.83/scripts/shBrushBash.js',
+			'coldfusion cf			./assets/SyntaxHighlighter-3.0.83/scripts/shBrushColdFusion.js',
+			'cpp c					./assets/SyntaxHighlighter-3.0.83/scripts/shBrushCpp.js',
+			'c# c-sharp csharp		./assets/SyntaxHighlighter-3.0.83/scripts/shBrushCSharp.js',
+			'css					./assets/SyntaxHighlighter-3.0.83/scripts/shBrushCss.js',
+			'delphi pascal			./assets/SyntaxHighlighter-3.0.83/scripts/shBrushDelphi.js',
+			'diff patch pas			./assets/SyntaxHighlighter-3.0.83/scripts/shBrushDiff.js',
+			'erl erlang				./assets/SyntaxHighlighter-3.0.83/scripts/shBrushErlang.js',
+			'groovy					./assets/SyntaxHighlighter-3.0.83/scripts/shBrushGroovy.js',
+			'java					./assets/SyntaxHighlighter-3.0.83/scripts/shBrushJava.js',
+			'jfx javafx				./assets/SyntaxHighlighter-3.0.83/scripts/shBrushJavaFX.js',
+			'js jscript javascript	./assets/SyntaxHighlighter-3.0.83/scripts/shBrushJScript.js',
+			'perl pl				./assets/SyntaxHighlighter-3.0.83/scripts/shBrushPerl.js',
+			'php					./assets/SyntaxHighlighter-3.0.83/scripts/shBrushPhp.js',
+			'text plain				./assets/SyntaxHighlighter-3.0.83/scripts/shBrushPlain.js',
+			'py python				./assets/SyntaxHighlighter-3.0.83/scripts/shBrushPython.js',
+			'ruby rails ror rb		./assets/SyntaxHighlighter-3.0.83/scripts/shBrushRuby.js',
+			'scala					./assets/SyntaxHighlighter-3.0.83/scripts/shBrushScala.js',
+			'sql					./assets/SyntaxHighlighter-3.0.83/scripts/shBrushSql.js',
+			'vb vbnet				./assets/SyntaxHighlighter-3.0.83/scripts/shBrushVb.js',
+			'xml xhtml xslt html	./assets/SyntaxHighlighter-3.0.83/scripts/shBrushXml.js'
+		);
+
+		SyntaxHighlighter.config.strings.viewSource = "view my source!!!!";
+		SyntaxHighlighter.config.strings.aboutDialog = "kakaka";
+		
+		SyntaxHighlighter.all();
+	</script>
+	
+</body>
+</html>
